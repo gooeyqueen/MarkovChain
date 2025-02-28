@@ -1,13 +1,13 @@
 ﻿namespace MarkovChain
 {
-    internal class TermsCollection
+    internal class TermsCollection<T> where T: notnull, IEquatable<T> 
     {
         private static readonly Random _rng = new();
 
-        private readonly Dictionary<string, int> _terms = [];
+        private readonly Dictionary<T, int> _terms = [];
         private int _total;
 
-        public void Add(string term)
+        public void Add(T term)
         {
             if (!_terms.ContainsKey(term))
             {
@@ -18,7 +18,7 @@
             _total++;
         }
 
-        public string Next()
+        public T Next()
         {
             int accumulator = 0;
             int random = _rng.Next(_total);

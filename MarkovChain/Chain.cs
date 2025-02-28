@@ -1,23 +1,20 @@
 ﻿namespace MarkovChain
 {
-    public class Chain
+    public class Chain<T> where T : notnull, IEquatable<T>
     {
-        private readonly Dictionary<string, TermsCollection> _terms = [];
+        private readonly Dictionary<T, TermsCollection<T>> _terms = [];
 
-        public void Add(string termA, string termB)
+        public void Add(T termA, T termB)
         {
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(termA);
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(termB);
-
             if (!_terms.ContainsKey(termA))
             {
-                _terms.Add(termA, new TermsCollection());
+                _terms.Add(termA, new TermsCollection<T>());
             }
 
             _terms[termA].Add(termB);
         }
 
-        public string Next(string term)
+        public T Next(T term)
         {
             return _terms[term].Next();
         }
